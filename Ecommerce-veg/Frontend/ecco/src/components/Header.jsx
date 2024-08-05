@@ -5,11 +5,13 @@ import { MdOutlineShoppingCart } from "react-icons/md";
 import { IoIosSearch } from "react-icons/io";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import LoginPopup from "../Login/LoginPopup";
+import { StoreContext } from "../contex/StoreContext";
 
 export default function Header() {
   const [showLogin, setShowLogin] = useState(false);
+  const { getTotalCartAmount } = useContext(StoreContext);
 
   return (
     <header>
@@ -45,19 +47,24 @@ export default function Header() {
           </nav>
         </div>
 
-        <div className=" flex items-center text-4xl text-[#8ef59f] gap-4 md:gap-6  cursor-pointer">
+        <div className=" flex items-center text-4xl text-[#8ef59f]  md:gap-6  cursor-pointer">
           <div>
             <IoIosSearch />
           </div>
           <div>
-            <div className="absolute  text-black bg-red-500 h-4 w-4  rounded-full m-0 p-0 text-base text-center ">
-              0
-            </div>
-            <MdOutlineShoppingCart />
+            {getTotalCartAmount()===0 ? (
+              ""
+            ) : (
+              <div className="  text-black bg-red-500 h-4 w-4  rounded-full m-0 p-0 text-base text-center "></div>
+            )}
+
+            <Link to={"cart"}>
+              <MdOutlineShoppingCart />
+            </Link>
           </div>
-          <div>
+          <div className="">
             <CgProfile onClick={() => setShowLogin(true)} />
-            {showLogin ? <LoginPopup setShowLogin={setShowLogin}/> : <></>}
+            {showLogin ? <LoginPopup setShowLogin={setShowLogin} /> : <></>}
           </div>
         </div>
       </div>
