@@ -10,8 +10,7 @@ import PlaceOrder from "./components/Pages/PlaceOrder";
 import Verify from "./components/Pages/Verify";
 import MyOrder from "./components/Pages/MyOrder";
 import Shop from "./components/Pages/Shop";
-import ShopDetials from "./components/Pages/ShopDetials";
-import Contact from "./components/Pages/Contact";
+import ShopDetials from "./components/Pages/Shopdetials";
 
 function App() {
   const router = createBrowserRouter([
@@ -36,7 +35,7 @@ function App() {
           element: <Verify/>,
         },
         {
-          path: "myorders",
+          path: "/myorders",
           element: <MyOrder/>,
         },
         {
@@ -46,10 +45,6 @@ function App() {
         {
           path: "/detial",
           element: <ShopDetials/>,
-        },
-        {
-          path: "contact",
-          element: <Contact/>,
         },
         
       ],

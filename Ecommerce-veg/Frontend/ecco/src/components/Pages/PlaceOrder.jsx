@@ -1,29 +1,139 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { StoreContext } from "../../contex/StoreContext";
 import "../css/placeorder.css";
 import "../css/cart.css";
+import axios from "axios";
 
 export default function PlaceOrder() {
-  const { getTotalCartAmount } = useContext(StoreContext);
+  const { getTotalCartAmount, token, food_list, cartItem, url } =
+    useContext(StoreContext);
+
+  const [data, setData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    street: "",
+    city: "",
+    state: "",
+    zipcode: "",
+    country: "",
+    phone: "",
+  });
+
+  const onChangeHandler = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+    setData((data) => ({ ...data, [name]: value }));
+  };
+
+  const placeOrder = async (event) => {
+    event.preventDefault();
+    let orderItems = [];
+    food_list.map((item) => {
+      if (cartItem[item._id] > 0) {
+        let itemInfo = item;
+        itemInfo["quantity"] = cartItem[item._id];
+        orderItems.push(itemInfo);
+      }
+    });
+    let orderData = {
+      address: data,
+      items: orderItems,
+      amount: getTotalCartAmount() + 2,
+    };
+    let response = await axios.post(url +"/api/order/place",orderData,{headers:{token}})
+    if(response.data.success){
+      const{session_url} = response.data;
+      window.location.replace(session_url);
+
+    }
+    else{
+      alert("Error");
+    }
+  };
+
   return (
-    <from className="place-order">
+    <form onSubmit={placeOrder} className="place-order">
       <div className="place-order-left">
         <p className="title">Delivery Information</p>
         <div className="multi-fields">
-          <input type="text" placeholder="first name" />
-          <input type="text" placeholder="last name" />
+          <input
+            type="text"
+            name="firstName"
+            onChange={onChangeHandler}
+            value={data.firstName}
+            placeholder="first name"
+            required
+          />
+          <input
+            type="text"
+            name="lastName"
+            onChange={onChangeHandler}
+            value={data.lastName}
+            placeholder="last name"
+            required
+          />
         </div>
-        <input type="email" placeholder="email address" />
-        <input type="text" placeholder="Street" />
+        <input
+          type="email"
+          name="email"
+          onChange={onChangeHandler}
+          value={data.email}
+          placeholder="email address"
+          required
+        />
+        <input
+          type="text"
+          name="street"
+          onChange={onChangeHandler}
+          value={data.street}
+          placeholder="Street"
+          required
+        />
         <div className="multi-fields">
-          <input type="text" placeholder="City" />
-          <input type="text" placeholder="State" />
+          <input
+            type="text"
+            name="city"
+            onChange={onChangeHandler}
+            value={data.city}
+            placeholder="City"
+            required
+          />
+          <input
+            type="text"
+            name="state"
+            onChange={onChangeHandler}
+            value={data.state}
+            placeholder="State"
+            required
+          />
         </div>
         <div className="multi-fields">
-          <input type="text" placeholder="Zip Code" />
-          <input type="text" placeholder="Country" />
+          <input
+            type="text"
+            name="zipcode"
+            onChange={onChangeHandler}
+            value={data.zipcode}
+            placeholder="Zip Code"
+            required
+          />
+          <input
+            type="text"
+            name="country"
+            onChange={onChangeHandler}
+            value={data.country}
+            placeholder="Country"
+            required
+          />
         </div>
-        <input type="text" placeholder="Phone" />
+        <input
+          type="text"
+          name="phone"
+          onChange={onChangeHandler}
+          value={data.phone}
+          placeholder="Phone"
+          required
+        />
       </div>
       <div className="place-order-right">
         <div className="cart-total">
@@ -47,9 +157,11 @@ export default function PlaceOrder() {
             </div>
           </div>
 
-          <button className="">PROCEED TO Payment</button>
+          <button type="submit" className="">
+            PROCEED TO Payment
+          </button>
         </div>
       </div>
-    </from>
+    </form>
   );
 }

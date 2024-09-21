@@ -1,5 +1,13 @@
+import FoodDisplay from "../../ExploreItem/FoodDisplay"
+import { useState } from "react"
 export default function Shop(){
+    const[category, setCategory] = useState("All")
+
     return(
-        <div>Shop</div>
+        <div>
+            <FoodDisplay category={category}/>
+
+
+        </div>
     )
 }

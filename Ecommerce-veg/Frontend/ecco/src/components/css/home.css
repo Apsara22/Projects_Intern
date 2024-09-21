@@ -65,3 +65,12 @@
    
 
 }
+
+
+    
+@media (max-width: 750px){
+    .header-contents h1{
+        display: none;
+    }
+    
+}

@@ -9,6 +9,7 @@ import menu_4 from './menu_4.png'
 import menu_5 from './menu_5.png'
 import meats from './meat.png'
 import salad from './salad.png'
+import contact from './conta1.png'
 
 import food_1 from './apple.png'
 import food_2 from './mangoo.png'
@@ -77,7 +78,8 @@ export const assets = {
     profile_icon,
     logout_icon,
     bag_icon,
-    parcel_icon
+    parcel_icon,
+    contact
 }
 
 export const menu_list = [

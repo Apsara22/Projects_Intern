@@ -66,7 +66,7 @@ const {url,setToken} = useContext(StoreContext)
             <input type="text" name="name" onChange={onChangeHandler} value={data.name} placeholder="Your Name" required />
           )}
           <input type="email" name="email" onChange={onChangeHandler} value={data.email} placeholder="Your Email" required />
-          <input type="password" name="password" onChange={onChangeHandler} value={data.password} placeholder="Your Paasword" required />
+          <input type="password" name="password" onChange={onChangeHandler} value={data.password} placeholder="Your Password" required />
         </div>
         <button type="submit">
           {currentState === "Signup" ? "Create Account" : "Login"}

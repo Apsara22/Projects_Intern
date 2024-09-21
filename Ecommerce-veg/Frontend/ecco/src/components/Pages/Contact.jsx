@@ -1,5 +1,10 @@
+
 export default function Contact(){
+    
     return(
-        <div>Contact</div>
+        <div className="container">
+            contact
+        </div>
+
     )
 }
